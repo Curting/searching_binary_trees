@@ -75,20 +75,18 @@ class Binary_Tree
   end
 
   def depth_first_search(data)
-    # A prettier approach would be LDR, but I'm going with DLR here. Less headache.
+    # A truer-to-nature approach would be LDR, but I'm going with DLR here. Less headache.
     # Stack: Add elements to the top and remove from the top
     stack = [@root]
 
-    loop do
-      # Emergency exit
-      break if stack.empty?
-
+    until stack.empty?
       # Pick element from the top
       node = stack.pop
 
       # Return the element if it's what we're looking for
       return node if node.data == data
 
+      # If not... Go on looking at the children.
       stack.push(node.left) if node.left
       stack.push(node.right) if node.right
     end
