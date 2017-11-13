@@ -6,6 +6,18 @@ class Node
   def initialize(data = nil, parent = nil)
     @data = data
   end
+
+  def each(&block)
+    # self.children[:left] evaluates to true if there exists a child
+    left.each(&block) if left
+    block.call(self)
+    right.each(&block) if right
+  end
+
+  def <=>(other_node)
+    self.data <=> other_node.data
+  end
+  
 end
 
 class Binary_Tree
@@ -34,9 +46,9 @@ class Binary_Tree
       else
         insert_node(data, node.right)
       end
-    end
+    endi
   end
-  
+
 end
 
 
