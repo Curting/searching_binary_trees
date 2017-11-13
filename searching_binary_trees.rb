@@ -57,10 +57,36 @@ class Binary_Tree
     string[0..-3]
   end
 
+  def breadth_first_search(data, queue = [@root])
+    # Queue: Add elements to the back and remove from the front
+    current = queue.shift
+
+    if data == current.data
+      current
+    else
+      # Add left child to queue
+      queue << current.left unless current.left.nil?
+
+      # Add right child to queue
+      queue << current.right unless current.right.nil?
+
+      # Time for some recursion
+      breadth_first_search(data, queue) unless queue.empty?
+    end
+  end
+
 end
 
+# Create a Binary Tree from an array
 tree = Binary_Tree.new
 tree.build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-puts tree.to_s
+
+# Test if the #build_tree method worked
+puts tree.to_s # => "1, 3, 4, 4, 5, 7, 7, 8, 9, 9, 23, 67, 324, 6345"
+
+# Breadth First Search
+puts tree.breadth_first_search(7) # => #<Node:0x007...>
+puts tree.breadth_first_search(666) # => nil
+
 
 
