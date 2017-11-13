@@ -74,14 +74,30 @@ class Binary_Tree
     end
   end
 
-  def dfs_rec(data)
-    found_node = nil
+  def depth_first_search(data)
+    # A prettier approach would be LDR, but I'm going with DLR here. Less headache.
+    # Stack: Add elements to the top and remove from the top
+    stack = [@root]
 
-    @root.each do |node|
-      found_node = node if data == node.data
+    loop do
+      # Emergency exit
+      break if stack.empty?
+
+      # Pick element from the top
+      node = stack.pop
+
+      # Return the element if it's what we're looking for
+      return node if node.data == data
+
+      stack.push(node.left) if node.left
+      stack.push(node.right) if node.right
     end
+  end
 
-    found_node
+  # I've used the Enumerables module in the following method.
+  # I don't know if it's cheating but I learned quite a lot from it:
+  def dfs_rec(data)
+    @root.each { |node| return node if data == node.data }
   end
 end
 
@@ -97,6 +113,10 @@ puts tree.breadth_first_search(7) # => #<Node:0x007...>
 puts tree.breadth_first_search(666).inspect # => nil
 
 # Depth First Search
+puts tree.depth_first_search(23) # => #<Node:0x007...>
+puts tree.depth_first_search(0).inspect # => nil
+
+# Depth First Search - recursion (in the each method)
 puts tree.dfs_rec(67) # => #<Node:0x007...>
 puts tree.dfs_rec(555).inspect # => nil
 
