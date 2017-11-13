@@ -18,6 +18,25 @@ class Binary_Tree
     end
   end
 
+  def insert_node(data, node = @root)
+    if data < node.data
+      if node.left.nil?
+        node.left = Node.new(data)
+        node.left.parent = node
+      else
+        insert_node(data, node.left)
+      end
+    else
+      # data >= node.data
+      if node.right.nil?
+        node.right = Node.new(data)
+        node.right.parent = node
+      else
+        insert_node(data, node.right)
+      end
+    end
+  end
+  
 end
 
 
