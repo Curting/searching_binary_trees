@@ -17,10 +17,12 @@ class Node
   def <=>(other_node)
     self.data <=> other_node.data
   end
-  
+
 end
 
 class Binary_Tree
+  attr_accessor :root
+
   def build_tree(ary)
     ary.shuffle!
     @root = Node.new(ary.shift)
@@ -46,16 +48,19 @@ class Binary_Tree
       else
         insert_node(data, node.right)
       end
-    endi
+    end
+  end
+
+  def to_s
+    string = ""
+    @root.each {|e| string << "#{e.data}, "}
+    string[0..-3]
   end
 
 end
 
+tree = Binary_Tree.new
+tree.build_tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+puts tree.to_s
 
 
-# [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]
-
-# Get the Middle of the array and make it root.
-# Recursively do same for left half and right half.
-# Get the middle of left half and make it left child of the root created in step 1.
-# Get the middle of right half and make it right child of the root created in step 1.
