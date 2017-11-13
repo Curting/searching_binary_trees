@@ -8,7 +8,7 @@ class Node
   end
 
   def each(&block)
-    # self.children[:left] evaluates to true if there exists a child
+    # left and/or right evaluates to true if the child exists
     left.each(&block) if left
     block.call(self)
     right.each(&block) if right
@@ -17,7 +17,6 @@ class Node
   def <=>(other_node)
     self.data <=> other_node.data
   end
-
 end
 
 class Binary_Tree
@@ -64,10 +63,10 @@ class Binary_Tree
     if data == current.data
       current
     else
-      # Add left child to queue
+      # Add potential left child to queue
       queue << current.left unless current.left.nil?
 
-      # Add right child to queue
+      # Add potential right child to queue
       queue << current.right unless current.right.nil?
 
       # Time for some recursion
@@ -75,6 +74,15 @@ class Binary_Tree
     end
   end
 
+  def dfs_rec(data)
+    found_node = nil
+
+    @root.each do |node|
+      found_node = node if data == node.data
+    end
+
+    found_node
+  end
 end
 
 # Create a Binary Tree from an array
@@ -86,7 +94,11 @@ puts tree.to_s # => "1, 3, 4, 4, 5, 7, 7, 8, 9, 9, 23, 67, 324, 6345"
 
 # Breadth First Search
 puts tree.breadth_first_search(7) # => #<Node:0x007...>
-puts tree.breadth_first_search(666) # => nil
+puts tree.breadth_first_search(666).inspect # => nil
+
+# Depth First Search
+puts tree.dfs_rec(67) # => #<Node:0x007...>
+puts tree.dfs_rec(555).inspect # => nil
 
 
 
